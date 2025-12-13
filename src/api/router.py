@@ -1,6 +1,6 @@
 import os
 import logging
-import pickle
+import joblib 
 import numpy as np
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
@@ -12,8 +12,7 @@ api_router = APIRouter()
 MODEL = None
 try:
     model_path = os.getenv("MODEL_PATH", "models/model.pkl")
-    with open(model_path, 'rb') as f:
-        MODEL = pickle.load(f)
+    MODEL = joblib.load(model_path) 
     logger.info(f"Model loaded from {model_path}")
 except Exception as e:
     logger.error(f"Error loading model: {e}")
@@ -46,4 +45,4 @@ async def predict(request: PredictRequest) -> PredictResponse:
         return predict_response
         
     except Exception as e:
-        return JSONResponse(content={f"Prediction error: {str(e)}"}, status_code=400)
+        return JSONResponse(content={"error": f"Prediction error: {str(e)}"}, status_code=400)
