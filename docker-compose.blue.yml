@@ -1,0 +1,8 @@
+services:
+  mlservice_blue: 
+    build: .
+    container_name: mlservice_blue
+    environment:
+      - MODEL_VERSION=v1.0.0
+    ports:
+      - "8082:8080"

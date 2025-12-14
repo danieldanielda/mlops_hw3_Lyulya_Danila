@@ -1,0 +1,8 @@
+services:
+  mlservice_green:
+    build: .
+    container_name: mlservice_green
+    environment:
+      - MODEL_VERSION=v1.1.0
+    ports:
+      - "8081:8080"
